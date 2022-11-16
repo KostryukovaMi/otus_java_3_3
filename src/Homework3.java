@@ -22,6 +22,8 @@ public class Homework3 {
         int[] correctAnswers = {3, 3, 1};
         Scanner scanner = new Scanner(System.in);
         int answer = 0;
+        boolean sign = true;
+
         for (int i = 0; i < questions.length; i++) {
 
             System.out.println(questions[i]);
@@ -30,12 +32,25 @@ public class Homework3 {
                 System.out.println(answerOptions[i][j]);
             }
 
-            System.out.print("Ваш ответ: ");
-            answer = scanner.nextInt();
-            while (answer<1 || answer>NUMBER_ANSWER_OPTIONS) {
-                System.out.println("Введено некорректное число. Попробуйте еще раз.");
+            while (sign) {
+
                 System.out.print("Ваш ответ: ");
-                answer = scanner.nextInt();
+
+                if (scanner.hasNextInt()) {
+                    answer = scanner.nextInt();
+                    if (answer > 0 && answer <= NUMBER_ANSWER_OPTIONS) {
+                        sign = false;
+                    }
+                    else {
+                        System.out.println("Введено некорректное число. Попробуйте еще раз.");
+                    }
+                }
+                else
+                {
+                    scanner.nextLine();
+                    System.out.println("Введено некорректное число. Попробуйте еще раз.");
+                }
+
             }
 
             if (answer == correctAnswers[i]) {
@@ -45,7 +60,8 @@ public class Homework3 {
                 System.out.println("Неправильно");
                 wrongCount++;
             }
-            answer = 0;
+
+            sign = true;
         }
 
         System.out.println("Результат: правильно " + correctCount + ", неправильно " + wrongCount);
